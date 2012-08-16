@@ -1,0 +1,6 @@
+= rubric
+
+Describe your project here
+
+:include:rubric.rdoc
+
