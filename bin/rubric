@@ -1,49 +1,133 @@
-#!/usr/bin/ruby
-# 1.9 adds realpath to resolve symlinks; 1.8 doesn't
-# have this method, so we add it so we get resolved symlinks
-# and compatibility
-unless File.respond_to? :realpath
-  class File #:nodoc:
-    def self.realpath path
-      return realpath(File.readlink(path)) if symlink?(path)
-      path
-    end
-  end
-end
-$: << File.expand_path(File.dirname(File.realpath(__FILE__)) + '/../lib')
-require 'rubygems'
+#!/usr/bin/env ruby
 require 'gli'
-require 'rubric_version'
+begin # XXX: Remove this begin/rescue before distributing your app
+require 'rubric'
+rescue LoadError
+  STDERR.puts "In development, you need to use `bundle exec bin/todo` to run your app"
+  STDERR.puts "At install-time, RubyGems will make sure lib, etc. are in the load path"
+  STDERR.puts "Feel free to remove this message from bin/todo now"
+  exit 64
+end
 
-include GLI
+include GLI::App
 
-program_desc 'Describe your application here'
+program_desc 'Rubric helps you name things. Like a cat or a child or a project or a car or your novel or whatever'
 
 version Rubric::VERSION
 
-desc 'Describe some switch here'
-switch [:s,:switch]
+# desc 'Describe some switch here'
+# switch [:s,:switch]
 
-desc 'Describe some flag here'
-default_value 'the default'
-arg_name 'The name of the argument'
-flag [:f,:flagname]
+# desc 'Describe some flag here'
+# default_value 'the default'
+# arg_name 'The name of the argument'
+# flag [:f,:flagname]
 
-desc 'Describe get here'
+desc 'Get will fetch you a name from the rubric'
 arg_name 'Describe arguments to get here'
 command :get do |c|
-  c.desc 'Describe a switch to get'
-  c.switch :s
+  # c.desc 'Describe a switch to get'
+  # c.switch :s
 
-  c.desc 'Describe a flag to get'
-  c.default_value 'default'
-  c.flag :f
+  c.desc 'How many do you want?'
+  c.default_value '1'
+  c.flag [:n, :number]
   c.action do |global_options,options,args|
+    number = options[:n].to_i
+    def get_rubric
+      
+      rubric_list = [ "rocket", 
+                      "laser",  
+                      "dinosaur", 
+                      "old people", 
+                      "tiger", 
+                      "chicken",  
+                      "steel",  
+                      "crystal",  
+                      "engine", 
+                      "lady", 
+                      "baby", 
+                      "rhino",  
+                      "panda",  
+                      "apocalypse", 
+                      "zombie", 
+                      "ninja",  
+                      "harrison ford",  
+                      "space",  
+                      "underpants", 
+                      "future", 
+                      "robot",  
+                      "chocolate",  
+                      "shark",  
+                      "jet",  
+                      "gun",  
+                      "guitar solo",  
+                      "beard",  
+                      "sparkle",  
+                      "fire", 
+                      "monkey", 
+                      "cyber",  
+                      "fist", 
+                      "unicorn",  
+                      "mustache", 
+                      "juice", 
+                      "winning", 
+                      "charlie sheen", 
+                      "rapture", 
+                      "torture", 
+                      "spasm", 
+                      "bro", 
+                      "jedi", 
+                      "toupee",
+                      "cheeseburger",
+                      "Coolio",
+                      "bone", 
+                      "Poland", 
+                      "satin", 
+                      "butter", 
+                      "muffin", 
+                      "milkshake",
+                      "sword", 
+                      "giant", 
+                      "queen", 
+                      "bear", 
+                      "rainbow", 
+                      "tornado", 
+                      "lips", 
+                      "carrot", 
+                      "donut", 
+                      "fraternity",  
+                      "trophy", 
+                      "penguin",  
+                      "shake weight", 
+                      "snuggie",
+                      "bacon",
+                      "explosion",
+                      "womb",
+                      "rampage",
+                    ]
+        name = rubric_list.sample + " " + rubric_list.sample
+        phrase = ["The rubric is infallible", "Jumanji", "Unggggh", "Stop it", "Sigh", "SHAZAM!"].sample
+        result = phrase + ": " + name
+        puts result
+        system "say #{result}"
+      end
 
-    # Your command logic here
-     
-    # If you have any errors, just raise them
-    # raise "that command made no sense"
+    if number > 1
+      number.times do
+        get_rubric
+      end
+    else
+      get_rubric
+    end
+  end
+end
+
+desc 'List the words in the rubric'
+arg_name 'No args'
+command :list do |c|
+  c.action do |global_options,options,args|
+    puts "Derp"
   end
 end
 
@@ -68,4 +152,4 @@ on_error do |exception|
   true
 end
 
-exit GLI.run(ARGV)
+exit run(ARGV)
