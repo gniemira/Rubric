@@ -94,6 +94,8 @@ def rubric_list
                   "explosion",
                   "womb",
                   "rampage",
+                  "gorilla",
+                  
                 ]
 end
 
