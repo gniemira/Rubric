@@ -95,7 +95,7 @@ def rubric_list
                   "womb",
                   "rampage",
                   "gorilla",
-                  
+
                 ]
 end
 
@@ -119,11 +119,11 @@ command :get do |c|
       result = phrase + ": " + name
       puts result
       
-      if :s
+      if :s == true
         system "say #{result}"
       end
 
-      if :c
+      if :c == true
         system "echo #{name} | pbcopy"
         puts "Copied #{name}"
       end
