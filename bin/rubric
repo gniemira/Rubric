@@ -23,11 +23,88 @@ version Rubric::VERSION
 # arg_name 'The name of the argument'
 # flag [:f,:flagname]
 
+def rubric_list
+  
+  rubric_list = [ "rocket", 
+                  "laser",  
+                  "dinosaur", 
+                  "old people", 
+                  "tiger", 
+                  "chicken",  
+                  "steel",  
+                  "crystal",  
+                  "engine", 
+                  "lady", 
+                  "baby", 
+                  "rhino",  
+                  "panda",  
+                  "apocalypse", 
+                  "zombie", 
+                  "ninja",  
+                  "harrison ford",  
+                  "space",  
+                  "underpants", 
+                  "future", 
+                  "robot",  
+                  "chocolate",  
+                  "shark",  
+                  "jet",  
+                  "gun",  
+                  "guitar solo",  
+                  "beard",  
+                  "sparkle",  
+                  "fire", 
+                  "monkey", 
+                  "cyber",  
+                  "fist", 
+                  "unicorn",  
+                  "mustache", 
+                  "juice", 
+                  "winning", 
+                  "charlie sheen", 
+                  "rapture", 
+                  "torture", 
+                  "spasm", 
+                  "bro", 
+                  "jedi", 
+                  "toupee",
+                  "cheeseburger",
+                  "Coolio",
+                  "bone", 
+                  "Poland", 
+                  "satin", 
+                  "butter", 
+                  "muffin", 
+                  "milkshake",
+                  "sword", 
+                  "giant", 
+                  "queen", 
+                  "bear", 
+                  "rainbow", 
+                  "tornado", 
+                  "lips", 
+                  "carrot", 
+                  "donut", 
+                  "fraternity",  
+                  "trophy", 
+                  "penguin",  
+                  "shake weight", 
+                  "snuggie",
+                  "bacon",
+                  "explosion",
+                  "womb",
+                  "rampage",
+                ]
+end
+
 desc 'Get will fetch you a name from the rubric'
 arg_name 'Describe arguments to get here'
 command :get do |c|
-  # c.desc 'Describe a switch to get'
-  # c.switch :s
+  c.desc "Say it, don't spray it"
+  c.switch [:s, :say]
+
+  c.desc "Copy the rubric name to the pasteboard"
+  c.switch [:c, :copy]
 
   c.desc 'How many do you want?'
   c.default_value '1'
@@ -35,83 +112,20 @@ command :get do |c|
   c.action do |global_options,options,args|
     number = options[:n].to_i
     def get_rubric
+      name = rubric_list.sample + " " + rubric_list.sample
+      phrase = ["The rubric is infallible", "Jumanji", "Unggggh", "Stop it", "Sigh", "SHAZAM!"].sample
+      result = phrase + ": " + name
+      puts result
       
-      rubric_list = [ "rocket", 
-                      "laser",  
-                      "dinosaur", 
-                      "old people", 
-                      "tiger", 
-                      "chicken",  
-                      "steel",  
-                      "crystal",  
-                      "engine", 
-                      "lady", 
-                      "baby", 
-                      "rhino",  
-                      "panda",  
-                      "apocalypse", 
-                      "zombie", 
-                      "ninja",  
-                      "harrison ford",  
-                      "space",  
-                      "underpants", 
-                      "future", 
-                      "robot",  
-                      "chocolate",  
-                      "shark",  
-                      "jet",  
-                      "gun",  
-                      "guitar solo",  
-                      "beard",  
-                      "sparkle",  
-                      "fire", 
-                      "monkey", 
-                      "cyber",  
-                      "fist", 
-                      "unicorn",  
-                      "mustache", 
-                      "juice", 
-                      "winning", 
-                      "charlie sheen", 
-                      "rapture", 
-                      "torture", 
-                      "spasm", 
-                      "bro", 
-                      "jedi", 
-                      "toupee",
-                      "cheeseburger",
-                      "Coolio",
-                      "bone", 
-                      "Poland", 
-                      "satin", 
-                      "butter", 
-                      "muffin", 
-                      "milkshake",
-                      "sword", 
-                      "giant", 
-                      "queen", 
-                      "bear", 
-                      "rainbow", 
-                      "tornado", 
-                      "lips", 
-                      "carrot", 
-                      "donut", 
-                      "fraternity",  
-                      "trophy", 
-                      "penguin",  
-                      "shake weight", 
-                      "snuggie",
-                      "bacon",
-                      "explosion",
-                      "womb",
-                      "rampage",
-                    ]
-        name = rubric_list.sample + " " + rubric_list.sample
-        phrase = ["The rubric is infallible", "Jumanji", "Unggggh", "Stop it", "Sigh", "SHAZAM!"].sample
-        result = phrase + ": " + name
-        puts result
+      if :s
         system "say #{result}"
       end
+
+      if :c
+        system "echo #{name} | pbcopy"
+        puts "Copied #{name}"
+      end
+    end
 
     if number > 1
       number.times do
@@ -127,7 +141,9 @@ desc 'List the words in the rubric'
 arg_name 'No args'
 command :list do |c|
   c.action do |global_options,options,args|
-    puts "Derp"
+    rubric_list.each do |name|
+      puts name
+    end
   end
 end
 
