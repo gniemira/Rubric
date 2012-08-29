@@ -119,11 +119,11 @@ command :get do |c|
       result = phrase + ": " + name
       puts result
       
-      if :s == true
+      if :s
         system "say #{result}"
       end
 
-      if :c == true
+      if :c
         system "echo #{name} | pbcopy"
         puts "Copied #{name}"
       end

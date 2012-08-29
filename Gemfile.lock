@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rubric (0.0.1)
+    rubric (0.0.3)
       gli (= 2.0.0)
 
 GEM
