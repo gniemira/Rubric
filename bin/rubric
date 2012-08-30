@@ -99,6 +99,10 @@ def rubric_list
                 ]
 end
 
+def phrase_list
+  ["The rubric is infallible", "Jumanji", "Unggggh", "Stop it", "Sigh", "SHAZAM!"]
+end
+
 desc 'Get will fetch you a name from the rubric'
 arg_name 'Describe arguments to get here'
 command :get do |c|
@@ -114,28 +118,55 @@ command :get do |c|
   c.action do |global_options,options,args|
     number = options[:n].to_i
     def get_rubric
-      name = rubric_list.sample + " " + rubric_list.sample
-      phrase = ["The rubric is infallible", "Jumanji", "Unggggh", "Stop it", "Sigh", "SHAZAM!"].sample
-      result = phrase + ": " + name
-      puts result
-      
-      if :s
-        system "say #{result}"
-      end
+      rubric = rubric_list.sample + " " + rubric_list.sample
+      rubric
+    end
 
-      if :c
-        system "echo #{name} | pbcopy"
-        puts "Copied #{name}"
-      end
+    def get_phrase
+      phrase = phrase_list.sample
+      phrase
     end
 
     if number > 1
+      rubric_list = []
+
       number.times do
-        get_rubric
+        rubric_inst = get_rubric
+        phrase_inst = get_phrase
+        result = phrase_inst + ": " + rubric_inst
+        
+        rubric_list << rubric_inst
+        
+        puts result
+
+        if options[:s]
+          system "say #{result}"
+        end
+
       end
+
+      if options[:c]
+        joined_rubric_list = rubric_list.join(", ")
+        system "echo #{joined_rubric_list} | pbcopy"
+        puts "Copied #{joined_rubric_list}"
+      end
+
     else
-      get_rubric
+      rubric_inst = get_rubric
+      phrase_inst = get_phrase
+      result = phrase_inst + ": " + rubric_inst
+      puts result
+
+      if options[:s]
+        system "say #{result}"
+      end
+
+      if options[:c]
+        system "echo #{rubric_inst} | pbcopy"
+        puts "Copied #{rubric_inst}"
+      end
     end
+
   end
 end
 
